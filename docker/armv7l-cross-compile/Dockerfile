@@ -3,7 +3,7 @@ FROM debian:bookworm
 RUN dpkg --add-architecture armhf
 RUN apt-get update && apt-get install -y --no-install-recommends \
   crossbuild-essential-armhf \
-  python \
+  python3 \
   git \
   pkg-config \
   fakeroot \

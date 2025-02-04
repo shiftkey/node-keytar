@@ -3,7 +3,7 @@ FROM debian:bookworm
 RUN dpkg --add-architecture arm64
 RUN apt-get update && apt-get install -y --no-install-recommends \
   crossbuild-essential-arm64 \
-  python \
+  python3 \
   git \
   pkg-config \
   fakeroot \
