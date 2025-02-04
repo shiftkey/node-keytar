@@ -29,6 +29,14 @@ jobs:
       with:
         languages: javascript, cpp
 
+    - run: |
+        sudo apt-get install gnome-keyring \
+                             libsecret-1-dev \
+                             dbus-x11 \
+                             python3-dev
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      name: Install additional dependencies
+
     # Setup dependencies (and build native modules from source)
     - name: Install dependencies
       run: |
