@@ -3,7 +3,7 @@
   "typings": "keytar.d.ts",
   "name": "keytar-forked",
   "description": "Bindings to native Mac/Linux/Windows password APIs (forked)",
-  "version": "7.9.0",
+  "version": "7.10.0",
   "license": "MIT",
   "repository": {
     "type": "git",
