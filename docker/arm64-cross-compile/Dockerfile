@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 RUN dpkg --add-architecture arm64
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -25,5 +25,5 @@ ENV AS=/usr/bin/aarch64-linux-gnu-as \
   FC=/usr/bin/aarch64-linux-gnu-gfortran \
   PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
 
-RUN curl -sL https://deb.nodesource.com/setup_15.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash -
 RUN apt-get install -y nodejs

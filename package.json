@@ -1,18 +1,18 @@
 {
   "main": "./lib/keytar.js",
   "typings": "keytar.d.ts",
-  "name": "keytar",
-  "description": "Bindings to native Mac/Linux/Windows password APIs",
+  "name": "keytar-forked",
+  "description": "Bindings to native Mac/Linux/Windows password APIs (forked)",
   "version": "7.9.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/atom/node-keytar.git"
+    "url": "https://github.com/shiftkey/node-keytar.git"
   },
   "bugs": {
-    "url": "https://github.com/atom/node-keytar/issues"
+    "url": "https://github.com/shiftkey/node-keytar/issues"
   },
-  "homepage": "http://atom.github.io/node-keytar",
+  "homepage": "https://github.com/shiftkey/node-keytar",
   "keywords": [
     "keychain",
     "password",
@@ -34,25 +34,23 @@
     "build": "node-gyp rebuild",
     "lint": "npm run cpplint",
     "cpplint": "node-cpplint --filters legal-copyright,build-include,build-namespaces src/*.cc",
-    "test": "npm run lint && npm rebuild && mocha --require babel-core/register spec/",
+    "test": "npm run lint && npm rebuild && mocha spec/",
     "prebuild-napi-x64": "prebuild -t 3 -r napi -a x64 --strip",
     "prebuild-napi-ia32": "prebuild -t 3 -r napi -a ia32 --strip",
     "prebuild-napi-arm64": "prebuild -t 3 -r napi -a arm64 --strip",
     "prebuild-napi-armv7l": "prebuild -t 3 -r napi -a armv7l --strip",
-    "upload": "node ./script/upload.js"
+    "prebuild-napi-arm": "prebuild -t 3 -r napi -a arm --strip"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "chai": "^4.2.0",
-    "mocha": "^9.2.0",
+    "chai": "^5.1.2",
+    "mocha": "^11.1.0",
     "node-cpplint": "~0.4.0",
-    "node-gyp": "^8.4.1",
-    "prebuild": "^11.0.2"
+    "node-gyp": "^11.0.0",
+    "prebuild": "^13.0.1"
   },
   "dependencies": {
-    "node-addon-api": "^4.3.0",
-    "prebuild-install": "^7.0.1"
+    "node-addon-api": "^8.3.0",
+    "prebuild-install": "^7.1.3"
   },
   "binary": {
     "napi_versions": [

@@ -8,17 +8,16 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: write # to allow workflow to publish release
+
 jobs:
   build:
     name: ${{ matrix.friendlyName }}
-    env:
-      CC: "clang"
-      CXX: "clang++"
-      npm_config_clang: "1"
 
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [22.x]
         os: [ubuntu-20.04, windows-2019, macos-latest]
         include:
           - os: ubuntu-20.04
@@ -31,9 +30,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
@@ -44,16 +43,7 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-20.04' }}
       name: Install additional dependencies
 
-    # This step can be removed as soon as official Windows arm64 builds are published:
-    # https://github.com/nodejs/build/issues/2450#issuecomment-705853342
-    - run: |
-        $NodeVersion = (node --version) -replace '^.'
-        $NodeFallbackVersion = "15.8.0"
-        & .\script\download-node-lib-win-arm64.ps1 $NodeVersion $NodeFallbackVersion
-      if: ${{ matrix.os == 'windows-2019' }}
-      name: Install Windows arm64 node.lib
-
-    - run: npm install
+    - run: npm ci
       name: Setup environment
 
     - run: npm run build
@@ -93,6 +83,7 @@ jobs:
         docker run --rm -v ${PWD}:/project node-keytar/i386 /bin/bash -c "cd /project && npm run prebuild-napi-ia32 && rm -rf build"
         docker build -t node-keytar/arm64-cross-compile docker/arm64-cross-compile
         docker run --rm -v ${PWD}:/project node-keytar/arm64-cross-compile /bin/bash -c "cd /project && npm run prebuild-napi-arm64 && rm -rf build"
+        docker run --rm -v ${PWD}:/project node-keytar/arm64-cross-compile /bin/bash -c "cd /project && npm run prebuild-napi-arm && rm -rf build"
         docker build -t node-keytar/armv7l-cross-compile docker/armv7l-cross-compile
         docker run --rm -v ${PWD}:/project node-keytar/armv7l-cross-compile /bin/bash -c "cd /project && npm run prebuild-napi-armv7l"
       if: ${{ matrix.os == 'ubuntu-20.04' }}
@@ -103,10 +94,8 @@ jobs:
       name: List prebuilds
 
     - name: Upload prebuilds to GitHub
-      run: npm run upload
+      run: npx prebuild --verbose --upload-all ${{ secrets.GITHUB_TOKEN }}
       if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-      env:
-        GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   alpine-build:
     runs-on: ubuntu-latest

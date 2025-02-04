@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 RUN dpkg --add-architecture armhf
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -25,5 +25,5 @@ ENV AS=/usr/bin/arm-linux-gnueabihf-as \
   FC=/usr/bin/arm-linux-gnueabihf-gfortran \
   PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
 
-RUN curl -sL https://deb.nodesource.com/setup_15.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash -
 RUN apt-get install -y nodejs
