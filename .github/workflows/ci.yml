@@ -31,10 +31,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Install Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version-file: '.node-version'
     - run: |
         sudo apt-get install gnome-keyring \
                              libsecret-1-dev \
@@ -132,10 +132,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js 22
+    - name: Install NodeJS
       uses: actions/setup-node@v4
       with:
-        node-version: 22.x
+        node-version-file: '.node-version'
         registry-url: 'https://registry.npmjs.org'
 
     - run: sudo apt-get install libsecret-1-dev
