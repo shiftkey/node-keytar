@@ -104,7 +104,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: install additional dependencies
       run: |
-        apk add g++ make python2 libsecret-dev
+        apk add g++ make python3 libsecret-dev
 
     - run: npm ci
       name: Setup environment
